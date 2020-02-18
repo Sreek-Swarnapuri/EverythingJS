@@ -50,9 +50,9 @@ class LinkedList {
         else if(index === this.length - 1) {
             this.append(value);
         }
-        else {
+        else if(index <= (this.length - 1) ) {
             let currentNode = this.head;
-            for(i=1; i< this.length -2; i++) {
+            for(let i=1; i< this.length -2; i++) {
                 if(index === i+1) {
                     const newNode = {
                         value: value,
@@ -62,6 +62,10 @@ class LinkedList {
                 }
                 currentNode = currentNode.next;
             }    
+        }
+        else{
+            console.log('yes');
+            return this.append(value);
         }
         return this.printList();
 
