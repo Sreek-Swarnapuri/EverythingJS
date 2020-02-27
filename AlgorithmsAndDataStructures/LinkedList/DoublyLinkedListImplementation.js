@@ -35,7 +35,7 @@ class DoublyLinkedList {
             value: value,
             next: this.head,
             prev: null
-        }
+        };
 
         this.head.next.prev = this.head;
 
@@ -66,13 +66,12 @@ class DoublyLinkedList {
         else if(index === this.length - 1) {
             this.append(value);
         }
-        else if(index <= (this.length - 1) ) {
+        else if(index < (this.length - 1) ) {
             const leader = this.traverseToIndex(index);
             const newNode = {
                 value: value,
                 next: leader.next,
                 prev: leader
-
             };
 
             leader.next.prev = newNode;
@@ -103,12 +102,15 @@ class DoublyLinkedList {
             leader.next.prev = null;
             leader.next = null;
             this.tail = leader;
-        } else {
+        } else if (index < this.length-1 ) {
             const nodeToBeRemoved = leader.next;
             leader.next.next.prev = leader;
             leader.next = leader.next.next;
             nodeToBeRemoved.next = null;
             nodeToBeRemoved.prev = null;
+        }
+        else {
+            console.log('No element at that index to remove');
         }
         
         this.length--;

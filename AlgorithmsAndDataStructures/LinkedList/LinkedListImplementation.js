@@ -88,6 +88,7 @@ class LinkedList {
         }
         else {
             leader.next = null;
+            this.tail = leader;
         }
         this.length--;
         return this.printList();
@@ -108,11 +109,54 @@ class LinkedList {
         }
     }
 
+    // Reverse the linked list - step by step
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
+    reverse(){
+        if(!this.head.next) {
+            return this.head;
+        }
+        
+        let first = this.head;
+        this.tail = this.head;
+        let second = first.next;
+        while(second) {
+            const temp = second.next;
+            second.next = first;
+            first = second;
+            second = temp;
+        }
+        this.head.next = null;
+        this.head = first;
+        return this;        
+    }
+
+     // Reverse the linked list - using existing Linked list functionality
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
+    reverseUsingExisitngFunc() {
+
+        let currentNode = this.head;
+        let newLinkedList = null;
+        while(currentNode!==null) {
+            if(newLinkedList === null) {
+                newLinkedList = new LinkedList(currentNode.value);
+            }
+            else {
+                newLinkedList.prepend(currentNode.value);
+            }
+            currentNode = currentNode.next;
+        }
+
+        return newLinkedList;
+
+    }
+
+
 
 }
 
 const myLinkedList = new LinkedList(10);
-
 myLinkedList.append(20);
 myLinkedList.append(15);
 myLinkedList.prepend(2);
@@ -123,5 +167,11 @@ console.log(myLinkedList.printList());
 myLinkedList.remove(3);
 console.log(myLinkedList.printList());
 console.log(myLinkedList);
-console.log(myLinkedList.head);
-console.log(myLinkedList.tail);
+console.log('Head is ->', myLinkedList.head);
+console.log('Tail is ->', myLinkedList.tail);
+
+console.log('Reversing the linked list:');
+console.log(myLinkedList.reverse().printList());
+console.log('Reversing the linked list using existing linked list functionality:');
+const revLinkedList = myLinkedList.reverseUsingExisitngFunc();
+console.log(revLinkedList.printList());
